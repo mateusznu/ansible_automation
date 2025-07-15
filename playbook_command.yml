@@ -1,0 +1,24 @@
+- hosts: all
+  collections:
+    - arubanetworks.aos_switch
+  tasks:
+    - name: Create and config vlan
+      arubaoss_command:
+        commands: [
+          'config',
+          'vlan 20',
+          'name VLAN 20',
+          'ip address 192.168.11.5 255.255.255.0',
+          'untagged 5',
+          'end']
+
+
+- hosts: all
+  collections:
+    - arubanetworks.aos_switch
+  vars:
+    ansible_connection: network_cli
+  tasks:
+    - name: Execute show run on the switch
+      arubaoss_command:
+        commands: ['show run']
