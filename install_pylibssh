@@ -1,0 +1,4 @@
+- hosts: all
+  - name: Install bottle python package
+    ansible.builtin.pip:
+      name: ansible-pylibssh
