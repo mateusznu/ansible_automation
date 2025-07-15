@@ -1,0 +1,24 @@
+- hosts: all
+  collections:
+    - arubanetworks.aos_switch
+  tasks:
+    - name: Execute show running-config command
+      arubaoss_command:
+        commands: ['show run']
+      register: run_config_output
+
+    - name: Save running-config output to a file
+      copy:
+        content: "{{ run_config_output.stdout[0] }}"
+        dest: "./running-config_{{ inventory_hostname }}.txt"
+
+
+- hosts: all
+  collections:
+    - arubanetworks.aos_switch
+  vars:
+    ansible_connection: network_cli
+  tasks:
+    - name: Execute show run on the switch
+      arubaoss_command:
+        commands: ['show run']
